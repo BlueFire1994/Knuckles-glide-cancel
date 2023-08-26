@@ -1,5 +1,3 @@
-Knuckles Glide cancel.
-
 A pretty simple but helpful mod. It allows Knuckles to cancel his glide and recurl in the air.
 The mod contains two types of glide cancel for Knuckles.
 
