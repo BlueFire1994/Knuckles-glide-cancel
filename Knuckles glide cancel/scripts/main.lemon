@@ -1,0 +1,85 @@
+global bool Knux.glidecanceltype
+global bool Knux.CancelSFX
+global u16 Knuckles.glidetimer
+//u8[0xffffE654] is the ES check. u8[0xffffE654] == 0 <<<<< This is to allow compatibility and prevent this mod from overwriting ES characters.
+function void KnucklesPressedJumpInMidAir()
+{
+	base.KnucklesPressedJumpInMidAir() // Call the base function.
+	if (u8[0xffffE654] == 0)
+	{
+		Knuckles.glidetimer = 0
+	}
+}
+function void UpdateKnucklesGlide()
+{
+	u8 input_state   = (char.character == CHARACTER_TAILS) ? control.tails.state   : control.player1.state
+	// Small timer to prevent Knuckles from going to unintended paths.
+	if (control.pad1.state & CONTROL_ABC) && (knuckles.glideclimbstate & 0x02) && (char.double_jump_state >= 1)
+	{
+		if (Knuckles.glidetimer < 20) 
+		{
+			Knuckles.glidetimer += 1
+		}	
+	}
+	else
+	{
+		Knuckles.glidetimer = 0
+	}
+	
+	if (char.double_jump_state >= 1) && (u8[0xffffE654] == 0) && (Knuckles.glidetimer == 20) && !(knuckles.glideclimbstate & 0x20) && (char.state != char.state.KNUX_FALLING)
+	{
+		if (Knux.glidecanceltype == 0 && (input_state & CONTROL_ABC) && (control.pad1.pressed & CONTROL_UP) && (knuckles.glideclimbstate & 0x02) && (char.state != char.state.KNUX_FALLING))
+		{
+			char.state = char.state.ROLLING
+			char.double_jump_state = 0
+			char.jumping = 0
+			if  (char.animation.sprite != 0xc2)
+			{ 
+				if (input_state & CONTROL_LEFT) || (char.animation.sprite == 0xc3 ||char.animation.sprite == 0xc4  )
+				{
+					char.velocity.x = -0x350
+
+				}
+				else if (input_state & CONTROL_RIGHT)
+				{ 
+					char.velocity.x = 0x350
+
+				}
+			}
+			char.velocity.y = -0x200
+			if (Knux.CancelSFX == 1)
+			{ 
+				playSound(SFX_JUMP)
+			}
+			else if (Knux.CancelSFX == 2)
+			{ 
+				playSound(SFX_INSTASHIELD)
+			}
+			
+		}
+		else if (Knux.glidecanceltype == 1 && (knuckles.glideclimbstate & 0x02) && ((input_state & CONTROL_ABC) && (control.pad1.pressed & CONTROL_ABC)) ) && (char.state != char.state.KNUX_FALLING) //&& (char.velocity.x >= 0x445 || char.velocity.x <= -0x445 &&  (char.flags & char.flag.FACING_LEFT)) 
+		{
+			char.state = char.state.ROLLING
+			char.double_jump_state = 0
+			char.jumping = 0
+			char.velocity.y = -0x200
+			if (Knux.CancelSFX == 1)
+			{ 
+				playSound(SFX_JUMP)
+			}
+			else if (Knux.CancelSFX == 2)
+			{ 
+				playSound(SFX_INSTASHIELD)
+			}
+
+		}
+		if (char.flags & char.flag.UNDERWATER)
+		{
+			 char.velocity.y >>= 1
+		}
+
+	}
+	
+	base.UpdateKnucklesGlide()
+}
+

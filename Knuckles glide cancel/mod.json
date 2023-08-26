@@ -1,0 +1,51 @@
+{
+
+"Metadata":
+
+{
+
+	"Name": "Knuckles glide cancel",
+	"Author": "Bluehotmess",
+	"Description": "Knuckles can now cancel his glide.",
+	"URL": "https://sonic3air.org",
+	"ModVersion": "1.0.0.0",
+	"GameVersion": "22.09.10.0"
+
+
+},
+"Settings":
+	{
+		"Group":
+		[
+
+			{
+				"InternalName": "Knuxglide",
+				"DisplayName": "Glide cancel type",
+				"Variable": "Knux.glidecanceltype",
+				"DefaultValue": "0",	
+				"Category": "General",			
+				"Options":
+				{
+					"0": "Default",
+					"1": "Megamix Mania"
+				}
+			},
+			{
+				"InternalName": "Knuxsfx",
+				"DisplayName": "Glide cancel SFX",
+				"Variable": "Knux.CancelSFX",
+				"DefaultValue": "0",	
+				"Category": "General",			
+				"Options":
+				{
+					"0": "None",
+					"1": "Jump sound",
+					"2": "Instashield"
+				}
+			}
+		
+			
+		]
+
+	}
+}
