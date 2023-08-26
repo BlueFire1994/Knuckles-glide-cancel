@@ -29,6 +29,7 @@ Megamix Mania Team- Optional knuckles glide type. Link for their 2020 SHC submis
 References:
 // Functions obtained from the Sonic 3 Air source code.
 sonic3air/Oxygen/sonic3air/scripts/maingame/character/character.lemon
+https://github.com/Eukaryot/sonic3air/blob/main/Oxygen/sonic3air/scripts/maingame/character/character.lemon
 
 // Sonic Megamix Mania
 https://shc.zone/entries/contest2020/274
